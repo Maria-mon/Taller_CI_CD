@@ -8,8 +8,13 @@ import os
 # Leer el CSV original
 df = pd.read_csv("penguins_size.csv")
 
-# Seleccionar columnas relevantes y limpiar datos nulos
-df = df[['bill_length_mm', 'bill_depth_mm', 'flipper_length_mm', 'body_mass_g', 'sex']].dropna()
+df = df[['culmen_length_mm', 'culmen_depth_mm', 'flipper_length_mm', 'body_mass_g', 'sex']].dropna()
+
+# Renombrar columnas para coincidir con lo que espera la API
+df.rename(columns={
+    'culmen_length_mm': 'bill_length_mm',
+    'culmen_depth_mm': 'bill_depth_mm'
+}, inplace=True)
 
 # Codificar sexo
 df['sex'] = df['sex'].map({'Male': 1, 'Female': 0})

@@ -8,18 +8,22 @@ import os
 # Leer el CSV original
 df = pd.read_csv("penguins_size.csv")
 
-df = df[['culmen_length_mm', 'culmen_depth_mm', 'flipper_length_mm', 'body_mass_g', 'sex']]
-df = df.dropna()  # Elimina filas con cualquier NaN
+df = df[['culmen_length_mm', 'culmen_depth_mm', 'flipper_length_mm', 'body_mass_g', 'sex']].dropna()
 
-# Renombrar columnas para que coincidan con lo que espera la API
+# Mostrar tamaño antes de filtrar
+print(f"Registros antes de filtrar sex: {len(df)}")
+
+# Renombrar columnas
 df.rename(columns={
     'culmen_length_mm': 'bill_length_mm',
     'culmen_depth_mm': 'bill_depth_mm'
 }, inplace=True)
 
-# Codificar la variable objetivo
-df = df[df['sex'].isin(['Male', 'Female'])]  # Elimina cualquier otro valor inesperado
-df['sex'] = df['sex'].map({'Male': 1, 'Female': 0})
+# Filtrar valores válidos de 'sex'
+df = df[df['sex'].str.strip().str.lower().isin(['male', 'female'])]
+df['sex'] = df['sex'].str.strip().str.capitalize().map({'Male': 1, 'Female': 0})
+
+print(f"Registros válidos después de limpieza: {len(df)}")
 
 # Separar variables y objetivo
 X = df[['bill_length_mm', 'bill_depth_mm', 'flipper_length_mm', 'body_mass_g']]

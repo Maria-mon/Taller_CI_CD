@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: api
-        image: mariamon/api:cf5c5bcf9a6d57217e01057483d88669cb6176ab
+        image: mariamon/api:89ce1b0f2b0451bb3d9d30f38c93f06d300d18f6
         ports:
         - containerPort: 8000
 ---

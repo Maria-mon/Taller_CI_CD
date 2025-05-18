@@ -61,14 +61,9 @@ jobs:
         git add manifests/api-deployment.yaml
         git commit -m "Actualizar imagen API a ${{ env.IMAGE_TAG }}" || echo "No hay cambios que commitear"
         git remote set-url origin https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}
-
-    - name: Imprimir repo remoto (debug temporal)
-      run: git remote -v
-
-    - name: Push manifiesto actualizado
-      env:
-        GH_TOKEN: ${{ secrets.GH_TOKEN }}
-      run: git push origin HEAD:main
+        echo "Verificando el remote:"
+        git remote -v
+        git push origin HEAD:main
 
     - name: Construir imagen LoadTester
       working-directory: loadtester

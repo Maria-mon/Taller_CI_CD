@@ -27,7 +27,11 @@ jobs:
       run: python train_model.py
 
     - name: Verificar que model.pkl fue generado
-      run: ls -lh api/app/model.pkl
+      run: |
+        echo "Buscando model.pkl generado..."
+        find . -name "model.pkl"
+        echo "Contenido de api/app/:"
+        ls -lh api/app/
 
     - name: Login en DockerHub
       uses: docker/login-action@v3
@@ -48,5 +52,4 @@ jobs:
 
     - name: Subir imagen LoadTester
       run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/loadtester:latest
-
 

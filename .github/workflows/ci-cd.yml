@@ -53,12 +53,15 @@ jobs:
         sed -i "s|image: .*/api:.*|image: ${{ secrets.DOCKERHUB_USERNAME }}/api:${{ env.IMAGE_TAG }}|" manifests/api-deployment.yaml
 
     - name: Commit y push de manifiesto actualizado
+      env:
+        GH_TOKEN: ${{ secrets.GH_TOKEN }}
       run: |
         git config user.name "ci-bot"
         git config user.email "ci@example.com"
         git add manifests/api-deployment.yaml
-        git commit -m "Actualizar imagen API a ${{ env.IMAGE_TAG }}"
-        git push
+        git commit -m "Actualizar imagen API a ${{ env.IMAGE_TAG }}" || echo "No hay cambios que commitear"
+        git remote set-url origin https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}
+        git push origin HEAD:main
 
     - name: Construir imagen LoadTester
       working-directory: loadtester

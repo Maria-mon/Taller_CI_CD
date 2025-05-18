@@ -41,8 +41,8 @@ model.fit(X_train, y_train)
 print("Validation Accuracy:", accuracy_score(y_val, model.predict(X_val)))
 print("Test Accuracy:", accuracy_score(y_test, model.predict(X_test)))
 
-# Guardar modelo
-os.makedirs("api/app", exist_ok=True)
-with open("api/app/model.pkl", "wb") as f:
+# Guardar modelo directamente en app/
+os.makedirs("app", exist_ok=True)
+with open("app/model.pkl", "wb") as f:
     pickle.dump(model, f)
-print("Modelo guardado en api/app/model.pkl")
+print("Modelo guardado en app/model.pkl")
